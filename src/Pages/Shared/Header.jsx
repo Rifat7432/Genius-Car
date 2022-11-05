@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
+import { AuthenticationContext } from '../../AuthContext/AuthContext';
 
 const Header = () => {
+  const {logout, user} = useContext(AuthenticationContext)
     const menueItems = <>
     <li className='font-semibold'>
         <Link to={'/'}>
         Home
         </Link>
+        
+        <Link to={'/orders'}>
+        orders
+        </Link>
+        {user?.uid ? <button  onClick={logout}>Logout</button>
+        :
         <Link to={'/login'}>
         Login
-        </Link>
+        </Link>}
     </li>
     </> 
     return (
