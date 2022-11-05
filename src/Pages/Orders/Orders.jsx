@@ -18,7 +18,6 @@ const Orders = () => {
         return res.json()})
       .then((data) => setOrders(data));
   }, [user?.email, orders]);
-  console.log(orders);
   return (
     <div>
       <h2 className="text-5xl">You have {orders.length} orders</h2>

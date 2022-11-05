@@ -6,6 +6,8 @@ import {
   updateProfile,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 import app from "../firebase/firebase.init";
 
@@ -15,6 +17,7 @@ const auth = getAuth(app);
 const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const GoogleProvider = new GoogleAuthProvider()
   useEffect(() => {
    const unsubscribe = onAuthStateChanged(auth, (user)=>{
         setUser(user)
@@ -35,10 +38,13 @@ const AuthContext = ({ children }) => {
         // ...
       });
   };
+const loginWithGoogle = ()=>{
+  return signInWithPopup(auth,GoogleProvider)
+}
   const logout = ()=>{
    return signOut(auth)
    .then(() => {
-      // Sign-out successful.
+      localStorage.removeItem('token')
     }).catch((error) => {
       // An error happened.
     });
@@ -51,7 +57,7 @@ const AuthContext = ({ children }) => {
     setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password);
   };
-  const authData = { login, signUp, update, user, loading, setLoading,logout};
+  const authData = {loginWithGoogle, login, signUp, update, user, loading, setLoading,logout};
   return (
     <div>
       <AuthenticationContext.Provider value={authData}>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import img from '../../assets/images/login/login.svg'
 import { AuthenticationContext } from "../../AuthContext/AuthContext";
+import SocialLogin from "../Shared/SocialLogin";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Login = () => {
         login(email,password)
         .then(result=>{
           const user = result.user
-          console.log()
+     
           fetch('https://genius-car-server-delta.vercel.app/jwt',{
             method:"POST",
             headers:{
@@ -25,7 +26,6 @@ const Login = () => {
           })
           .then(res=>res.json())
           .then(data=>{
-            console.log(data)
             localStorage.setItem('token',data.token)
           })
           .catch(e=>console.error(e))
@@ -78,6 +78,9 @@ const Login = () => {
             </div>
           </form>
           <p className='text-center my-8'>New to Genius Car <Link className="text-orange-600" to={'/signup'}>Sign Up</Link></p>
+          <div className="text-center my-8 text-green-600 text-3xl">
+            Login By     <SocialLogin></SocialLogin> 
+          </div>
         </div>
       </div>
     </div>
